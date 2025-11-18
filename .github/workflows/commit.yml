@@ -15,8 +15,8 @@ jobs:
           echo "$(date)" >> update.txt
       - name: Commit
         run: |
-          git config user.name "YOUR_GITHUB_USERNAME"
-          git config user.email "YOUR_GITHUB_EMAIL"
+          git config user.name "ujwal6-eng"
+          git config user.email "anandujwal6@gmail.com"
           git add .
           git commit -m "Daily update"
           git push

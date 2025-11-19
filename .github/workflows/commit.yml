@@ -9,7 +9,7 @@ jobs:
   auto-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkoutv2
+      - uses: actions/checkoutv@2
       - name: Update file
         run: |
           echo "$(date)" >> update.txt
@@ -17,6 +17,6 @@ jobs:
         run: |
           git config user.name "ujwal6-eng"
           git config user.email "anandujwal6@gmail.com"
-          git add .
+          git add update.txt
           git commit -m "Daily update"
           git push

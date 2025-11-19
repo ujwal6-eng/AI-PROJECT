@@ -9,7 +9,7 @@ jobs:
   auto-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkoutv@2
+      - uses: actions/checkout@v2
       - name: Update file
         run: |
           echo "$(date)" >> update.txt
@@ -20,3 +20,4 @@ jobs:
           git add update.txt
           git commit -m "Daily update"
           git push
+

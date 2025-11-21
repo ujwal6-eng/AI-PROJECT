@@ -10,24 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq htmlq
-
-      - name: Download trending HTML
+      - name: Download GitHub trending HTML
         run: |
           curl -s https://github.com/trending > trending.html
 
-      - name: Parse trending repos
-        id: parse
+      - name: Extract repo names (pure grep + sed)
         run: |
-          repos=$(htmlq 'article h2 a' -a href < trending.html | sed 's|^/||')
-          echo "$repos" > repos.txt
-          count=$(wc -l < repos.txt)
-          echo "COUNT=$count" >> $GITHUB_ENV
+          grep -oP '(?<=href="/)[^"]+' trending.html | grep "/" | head -n 50 > repos.txt
+          echo "Found repos:"
+          cat repos.txt
+          COUNT=$(wc -l < repos.txt)
+          echo "COUNT=$COUNT" >> $GITHUB_ENV
 
-      - name: Star random repos
+      - name: Star 10 random repos
         run: |
           if [ "$COUNT" -eq "0" ]; then
             echo "No repos found."
@@ -41,7 +36,7 @@ jobs:
             curl -X PUT \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
-              https://api.github.com/user/starred/$repo
+              "https://api.github.com/user/starred/$repo"
 
-            sleep $(( (RANDOM % 10) + 2 ))
+            sleep $(( (RANDOM % 10) + 3 ))
           done

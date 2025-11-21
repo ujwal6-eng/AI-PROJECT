@@ -1,1 +1,19 @@
+name: Auto Star Bot
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # har 6 ghante chalta hai
+  workflow_dispatch:
+
+jobs:
+  auto-star:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Star a repo
+        run: |
+          curl -X PUT \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
+            https://api.github.com/user/starred/torvalds/linux
 

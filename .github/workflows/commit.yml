@@ -17,8 +17,8 @@ jobs:
           git config user.name "ujwal6-eng"
           git config user.email "anandujwal6@gmail.com"
 
-          # SAFE random commit range (20 to 120)
-          max_commits=$(( ( RANDOM % 101 ) + 20 ))
+          # SAFE random commit range (20 to 50)
+          max_commits=$(( ( RANDOM % 31 ) + 20 ))
           echo "Today's commits: $max_commits"
 
           for ((i=1; i<=max_commits; i++)); do
